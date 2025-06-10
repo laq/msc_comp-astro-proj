@@ -7,6 +7,19 @@ Steps:
 * Set a plummer model to simulate
 
 
+Done:
+[ ] First test of 2d animation with solve_ivp and 3 body problem
+Next:
+[ ] Organize code to allow easy testing of different methods
+[ ] Add my euler or heun solutions
+[ ] Add my simplectic solution
+
+[ ] Externalize solver to python file
+[ ] Do poc of plummer model moving
+[ ] Do poc of 3d 3body problem
+
+
+
 
 
 ### Email:
