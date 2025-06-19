@@ -1,5 +1,24 @@
 # Focus project Astrophyicis
 
+Plans for 2 slide presentation:
+
+1st slide purpose of problem:
+* Simple one line description
+* Plot with max number of stars for 1 or 3 steps?
+    * Do memory and time restricted test
+    * include different algos for acceleration
+    * Including leapfrog?
+    * include their energy function??
+
+2nd slide
+* use best algorithm to do taichi live simulation
+* implement buttons to change the rotation speed of camera
+
+
+
+
+
+---
 Steps:
 * Import Leapfrog scheme
 * Do animation with Leapfrog scheme
@@ -19,6 +38,12 @@ Next:
 [ ] Do poc of 3d 3body problem
 
 
+
+--- Did test with taichi using loops and gpu it is not faster than jax, almost the same as numba even with 32 bits
+
+Question: can I make the taichi implementation loop + vector oriented?
+
+Question 2 how high can I go with jax?
 
 
 
