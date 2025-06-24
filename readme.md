@@ -1,5 +1,25 @@
 # Focus project Astrophyicis
 
+* Next steps:
+
+* Test acc functions:
+    For loop comparing results with loops
+* Test integrators
+    For loop with test of 3 body problem
+    * leapfrog
+    * rgk scipy
+    Measure Energy
+    * Add plummer smooth for close encounters
+* Main code:
+    * Code for plummer model 
+    * Save animation result to file (hd5f?)
+* Animation: 
+    * Load data
+    * Step forward or back
+    * Rotate camera speed
+
+
+
 Plans for 2 slide presentation:
 
 1st slide purpose of problem:

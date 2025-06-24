@@ -9,6 +9,8 @@ from numba import njit, prange
 import jax.numpy as jnp
 import jax
 
+## Taichi
+import taichi as ti
 
 # Implement acceleration just using pythonic loops
 def get_acceleration_naive_loops(X: np.ndarray) -> np.ndarray:
@@ -106,7 +108,7 @@ def get_acceleration_jax(X: np.ndarray) -> np.ndarray:
 
 
 # Ensure use of 64 bits vs the default of 32 bits
-jax.config.update("jax_enable_x64", True)
+# jax.config.update("jax_enable_x64", True)
 
 
 
@@ -140,6 +142,42 @@ def get_acceleration_jax2(X: np.ndarray) -> np.ndarray:
 
 
 
+# ti.init(arch=ti.cpu, default_fp=ti.f32)  # Use GPU (or ti.cpu for CPU)
+ti.init(arch=ti.gpu, default_fp=ti.f32)  # Use GPU (or ti.cpu for CPU)
+# ti.init(arch=ti.gpu)  # Use GPU (or ti.cpu for CPU)
+# ti.get_runtime().core.set_capability(ti.core.Capability.vulkan_64bit)
+
+
+def get_acceleration_taichi(X: np.ndarray) -> np.ndarray:
+    X = X.astype(np.float32)
+    n=X.shape[0]
+
+    positions = ti.Vector.field(3, dtype=ti.f32, shape=n)
+    acceleration = ti.Vector.field(3, dtype=ti.f32, shape=n)
+    
+    positions.from_numpy(X)
+
+
+    @ti.kernel
+    def compute_acceleration():
+        n = positions.shape[0]
+        for i in positions:
+            sum_force = ti.math.vec3(0.0)
+            for j in range(n):
+                if i != j:
+                    r = positions[j] - positions[i]
+                    r_norm = r.norm()
+                    # sum_force += r / (r_norm**3 + 1e-5*r_norm**2)
+                    sum_force += r / (r_norm**3 )
+            acceleration[i] = -sum_force
+    
+    compute_acceleration()
+    return acceleration.to_numpy()
+
+
+#-------------------------------
+
+
 acceleration_functions = [
     get_acceleration_naive_loops,
     get_acceleration_numpy,
@@ -148,6 +186,7 @@ acceleration_functions = [
     get_acceleration_jax_cpu,
     get_acceleration_jax2,
     # get_acceleration_jax_gpu
+    get_acceleration_taichi,
 ]
 
 acceleration_functions_dic = {f.__name__.replace("get_acceleration_",""):f   for f in acceleration_functions}
