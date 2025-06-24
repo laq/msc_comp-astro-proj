@@ -1,11 +1,69 @@
 # Focus project Astrophyicis
 
+* Next steps:
+
+* Test acc functions:
+    For loop comparing results with loops
+* Test integrators
+    For loop with test of 3 body problem
+    * leapfrog
+    * rgk scipy
+    Measure Energy
+    * Add plummer smooth for close encounters
+* Main code:
+    * Code for plummer model 
+    * Save animation result to file (hd5f?)
+* Animation: 
+    * Load data
+    * Step forward or back
+    * Rotate camera speed
+
+
+
+Plans for 2 slide presentation:
+
+1st slide purpose of problem:
+* Simple one line description
+* Plot with max number of stars for 1 or 3 steps?
+    * Do memory and time restricted test
+    * include different algos for acceleration
+    * Including leapfrog?
+    * include their energy function??
+
+2nd slide
+* use best algorithm to do taichi live simulation
+* implement buttons to change the rotation speed of camera
+
+
+
+
+
+---
 Steps:
 * Import Leapfrog scheme
 * Do animation with Leapfrog scheme
 * Do a test of integration with 3body problem
 * Set a plummer model to simulate
 
+
+Done:
+[ ] First test of 2d animation with solve_ivp and 3 body problem
+Next:
+[ ] Organize code to allow easy testing of different methods
+[ ] Add my euler or heun solutions
+[ ] Add my simplectic solution
+
+[ ] Externalize solver to python file
+[ ] Do poc of plummer model moving
+[ ] Do poc of 3d 3body problem
+
+
+
+--- Did test with taichi using loops and gpu it is not faster than jax, almost the same as numba even with 32 bits
+
+Question: can I make the taichi implementation loop + vector oriented?
+
+Question 2 how high can I go with jax?
 
 
 
