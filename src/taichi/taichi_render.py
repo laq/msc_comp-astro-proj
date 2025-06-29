@@ -16,7 +16,7 @@ def init_colors():
         # colors[i] = ti.Vector([ti.random()/2+0.5, ti.random()/2+0.5, ti.random()/2+0.5])
         colors[i] = ti.Vector([ti.random(), ti.random(), ti.random()])
 
-
+# Rodrigues rotation
 def rotate_vec(v: ti.Vector, axis: ti.Vector, angle: ti.f32) -> ti.Vector:
     axis = axis.normalized()
     cos_a = ti.cos(angle)
@@ -26,18 +26,6 @@ def rotate_vec(v: ti.Vector, axis: ti.Vector, angle: ti.f32) -> ti.Vector:
             axis * axis.dot(v) * (1 - cos_a))
 
 
-
-# def init_colors():
-#     colors_np = star_colors.generate_star_colors(N)
-#     print(colors_np.shape, colors.shape, colors_np[:4])
-#     colors.from_numpy(colors_np)
-#     # print(colors[:10])
-
-
-# Fields
-# positions = ti.Vector.field(3, dtype=ti.f32, shape=N)
-# velocities = ti.Vector.field(3, dtype=ti.f32, shape=N)
-# colors = ti.Vector.field(3, dtype=ti.f32, shape=N)
 
 shared_node = taichi_gravity.create_fields()
 
@@ -75,6 +63,7 @@ reset_requested = False
 zoom_sensitivity = 10
 
 rotate = False
+record = False
 
 taichi_gravity.init_bodies()
 i = 0
@@ -93,9 +82,9 @@ while window.running:
             camera_pos = camera_pos - zoom_sensitivity
             zoomed = True
         elif e.key == "p":
-            rotate = False
-        elif e.key == "l":
-            rotate = True
+            rotate = not rotate
+        elif e.key == "v":
+            record = not record
         elif e.key == "e":
             break
 
@@ -138,5 +127,6 @@ while window.running:
 
     canvas.scene(scene)
     window.show()
-    # window.show(f"frames/frame_{i}.png")
+    if record:
+        window.save_image(f"frames/frame_{i:04d}.png")
     i = i + 1

@@ -97,7 +97,7 @@ def get_acceleration_numba_parallel(X: np.ndarray) -> np.ndarray:
 
 
 
-# @jax.jit # Dont use the annotation to be able to compile for gpu and cpu
+@jax.jit # Dont use the annotation to be able to compile for gpu and cpu
 def get_acceleration_jax(X: np.ndarray) -> np.ndarray:
     N = len(X)
 
@@ -121,7 +121,7 @@ def get_acceleration_jax(X: np.ndarray) -> np.ndarray:
 # For using with gpu - run in another notebook in colab
 # Colab only allows two cores so the parallelization is not effective there.
 # from: https://github.com/jax-ml/jax/issues/1598#issuecomment-548031576
-get_acceleration_jax_cpu = jax.jit(get_acceleration_jax, backend='cpu')
+# get_acceleration_jax_cpu = jax.jit(get_acceleration_jax, backend='cpu')
 # get_acceleration_jax_gpu = jax.jit(get_acceleration_jax, backend="gpu")
 
 
@@ -144,6 +144,25 @@ def get_acceleration_jax2(X: np.ndarray) -> np.ndarray:
 
     # Parallel loop using jax.vmap
     return lax.map(get_i, jnp.arange(N))  # Vectorized version for parallel execution
+
+
+@jax.jit # Dont use the annotation to be able to compile for gpu and cpu
+def get_acceleration_jax3(X: np.ndarray) -> np.ndarray:
+    N = len(X)
+
+    def get_i(i):  # Kernel executed in parallel
+
+        for j in range(len(X)):
+            if i == j:
+                continue
+            diff = X[j] - X[i]
+            cube = jnp.linalg.norm(diff) ** 3
+            sum = sum + diff / cube
+
+        return -sum
+
+    # Parallel loop using jax.vmap
+    return jax.vmap(get_i, jnp.arange(N))  # Vectorized version for parallel execution
 
 
 
@@ -189,8 +208,9 @@ acceleration_functions = [
     get_acceleration_numpy,
     get_acceleration_naive_loops_numba,
     get_acceleration_numba_parallel,
-    get_acceleration_jax_cpu,
+    get_acceleration_jax,
     get_acceleration_jax2,
+    get_acceleration_jax3,
     # get_acceleration_jax_gpu
     get_acceleration_taichi,
 ]

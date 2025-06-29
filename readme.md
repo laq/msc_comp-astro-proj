@@ -9,7 +9,13 @@
 * For specific file `pytest tests/test_integrators.py`
 
 
+## Make video
+Videos are maked frame by frame in the frames folder
+Run to make video:  
+`ffmpeg -r 30 -i frame_%04d.png -c:v libx264 -pix_fmt yuv420p output.mp4`
+Or to add overlay text 
 
+`ffmpeg -r 15 -i frame_%04d.png -vf "drawtext=text='N-Body simulation 30k stars':fontcolor=white:fontsize=24:x=10:y=10" -c:v libx264 -pix_fmt yuv420p output.mp4`
 
 
 * Next steps:
