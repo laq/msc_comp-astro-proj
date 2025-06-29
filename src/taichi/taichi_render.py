@@ -17,36 +17,6 @@ def init_colors():
         colors[i] = ti.Vector([ti.random(), ti.random(), ti.random()])
 
 
-def cartesian_to_spherical_camera(camera_cartesian):
-    x, y, z = camera_cartesian
-    r = ti.sqrt(x * x + y * y + z * z)
-    theta = ti.acos(z / r) if r > 0 else 0.0  # polar angle
-    phi = ti.atan2(y, x)                      # azimuth
-    camera_spherical = ti.Vector([r, theta, phi])
-    return camera_spherical
-
-
-
-def spherical_to_cartesian_camera(camera_spherical):
-    r, theta, phi = camera_spherical
-    x = r * ti.sin(theta) * ti.cos(phi)
-    y = r * ti.sin(theta) * ti.sin(phi)
-    z = r * ti.cos(theta)
-    camera_cartesian = ti.Vector([x, y, z])
-    return camera_cartesian
-
-
-def rotate_vew(camera):
-    camera_cartesian = camera.curr_position
-    camera_spherical = cartesian_to_spherical_camera(camera_cartesian)
-    print("Cameras")
-    print("Spherical",camera_spherical)
-    camera_spherical[1]+=0.1
-    camera_cartesian = spherical_to_cartesian_camera(camera_spherical)
-    print("Cartesian",camera_cartesian)
-    camera.position(*camera_cartesian)
-
-
 def rotate_vec(v: ti.Vector, axis: ti.Vector, angle: ti.f32) -> ti.Vector:
     axis = axis.normalized()
     cos_a = ti.cos(angle)
@@ -104,7 +74,7 @@ paused = False
 reset_requested = False
 zoom_sensitivity = 10
 
-rotate = True
+rotate = False
 
 taichi_gravity.init_bodies()
 i = 0
@@ -124,7 +94,8 @@ while window.running:
             zoomed = True
         elif e.key == "p":
             rotate = False
-            print("Cartesian",camera.curr_position)
+        elif e.key == "l":
+            rotate = True
         elif e.key == "e":
             break
 
