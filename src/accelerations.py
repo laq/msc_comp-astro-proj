@@ -1,3 +1,9 @@
+# Direct N-Body summation
+# Different implementations of the O(n^2) N-Body summation
+
+# Author: Leonardo Quinonez
+
+
 import sys
 import time
 import numpy as np

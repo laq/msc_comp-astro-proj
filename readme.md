@@ -1,8 +1,20 @@
 # Focus project Astrophyicis
+## Objective:
+
+
+## Usage:
+
+## Tests:
+* `pytest`
+* For specific file `pytest tests/test_integrators.py`
+
+
+
+
 
 * Next steps:
 
-* Test acc functions:
+[x]  Test acc functions:
     For loop comparing results with loops
 * Test integrators
     For loop with test of 3 body problem
