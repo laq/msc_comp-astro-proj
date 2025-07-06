@@ -1,5 +1,6 @@
 # Frames
 src/taichi/frames
+report/texbuild
 
 
 # Byte-compiled / optimized / DLL files
