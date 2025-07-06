@@ -6,7 +6,7 @@
 
 ## Tests:
 * `pytest`
-* For specific file `pytest tests/test_integrators.py`
+* For specific file `pytest tests/test_accelerations.py`
 
 
 ## Make video

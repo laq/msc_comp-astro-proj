@@ -98,7 +98,7 @@ def get_acceleration_numba_parallel(X: np.ndarray) -> np.ndarray:
 
 
 @jax.jit # Dont use the annotation to be able to compile for gpu and cpu
-def get_acceleration_jax(X: np.ndarray) -> np.ndarray:
+def get_acceleration_jax_vmap(X: np.ndarray) -> np.ndarray:
     N = len(X)
 
     def get_i(i):  # Kernel executed in parallel
@@ -127,9 +127,11 @@ def get_acceleration_jax(X: np.ndarray) -> np.ndarray:
 
 
 from jax import lax
-
+# Using lax map because of memory issues with vmap
+# https://apxml.com/courses/getting-started-with-jax/chapter-4-automatic-vectorization-vmap/vmap-performance
+# https://docs.jax.dev/en/latest/_autosummary/jax.lax.map.html
 @jax.jit # Dont use the annotation to be able to compile for gpu and cpu
-def get_acceleration_jax2(X: np.ndarray) -> np.ndarray:
+def get_acceleration_jax_map(X: np.ndarray) -> np.ndarray:
     N = len(X)
 
     def get_i(i):  # Kernel executed in parallel
@@ -145,7 +147,7 @@ def get_acceleration_jax2(X: np.ndarray) -> np.ndarray:
     # Parallel loop using jax.vmap
     return lax.map(get_i, jnp.arange(N))  # Vectorized version for parallel execution
 
-
+# An attempt to use vmap with smaller intermediate arrays
 @jax.jit # Dont use the annotation to be able to compile for gpu and cpu
 def get_acceleration_jax3(X: np.ndarray) -> np.ndarray:
     N = len(X)
@@ -231,7 +233,7 @@ if __name__ == "__main__":
 
             s = 0
             durations = []
-            for i in range(3):
+            for i in range(repetitions):
                 X = np.random.rand(N, 3)
                 start_time = time.time()
                 result = acceleration_functions_dic[f_name](X)
