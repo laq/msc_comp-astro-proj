@@ -5,9 +5,9 @@ ti.init(arch=ti.gpu)
 # ti.init(arch=ti.gpu, debug=True)
 
 # # Config
-N = int(1e4)  # Change this number as needed
+N = int(4e4)  # Change this number as needed
 # N = int(2e3)  # Change this number as needed
-dt = 1e-2
+dt = 1e-1
 # dt = 0.01
 softening = 1e-3
 
