@@ -124,7 +124,7 @@ camera.lookat(0, 0, 0)
 paused = False
 reset_requested = False
 zoom_sensitivity = 10
-rotation_speed = 0.01
+rotation_speed = 0.001
 
 rotate_y = False
 rotate_x = 0

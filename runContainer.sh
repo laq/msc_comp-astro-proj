@@ -8,7 +8,7 @@ docker run -ti \
     --name project \
     --memory 10g  \
     -v .:/home/jovyan/work/ \
-    -e JUPYTER_TOKEN="laq" \
+    -e JUPYTER_TOKEN="<token>" \
     -e DISPLAY=$DISPLAY \
     -v /tmp/.X11-unix/:/tmp/.X11-unix/ \
     -p 8889:8888 \

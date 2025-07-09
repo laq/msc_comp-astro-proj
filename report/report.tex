@@ -146,7 +146,7 @@ Given that the available hardware possess no Nvidia GPU the original plan was ex
 \subsubsection{Performance Comparison}
 
 All tests were run on a laptop with 12th Gen Intel(R) Core(TM) i7-1250U and maximum performance selected, a max frequency of 4.7Ghz and 10 cores. The integrated GPU is an Alder Lake-UP4 GT2.
-The available GPU only allows for 32 bit floats. To attempt a fair comparison between Jax and Taichi which seemed the fastest competitors we leave Jax on 32 bits as well. \footnote{Jax by default uses 32 bits but can be set for 64 bits with: \texttt{jax.config.update("jax\_enable\_x64", True) }}
+The available GPU only allows for 32 bit floats. To attempt a fair comparison between Jax and Taichi --- which seemed to be the fastest competitors --- we leave Jax on 32 bits as well. \footnote{Jax by default uses 32 bits but can be set for 64 bits with: \texttt{jax.config.update("jax\_enable\_x64", True) }}
 
 
 In order to compare the performance of the different methods we increase the number of stars exponentially until the time to perform a single acceleration computation 
@@ -167,7 +167,7 @@ Curiously enough Jax using \texttt{vmap} presents a similar memory issue.
 It seems to be the case that, the current implementation requires as intermediate memory the vector of distances of the current star with all other stars, so a vector size N. Given that ``JAX might materialize the large intermediate matrix for all batch elements at once, requiring batch\_size * memory\_per\_intermediate\_matrix memory'' \parencite{JaxPerformance}, Jax presents a similar excessive memory usage pattern as NumPy.
 
 An improved implementation with Jax's \texttt{lax.map} was additionally made, solving the memory issue.
-This implementation using \texttt{lax.map} allows to set a batch size, the small tests on this increased progressively the memory usage without a visible impact on performance.
+This implementation using \texttt{lax.map} allows to set a batch size. Some basic tests increasing this value show proportional increases in memory usage without a visible impact on performance.
 
 
 \begin{figure}
