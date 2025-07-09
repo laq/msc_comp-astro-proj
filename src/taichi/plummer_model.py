@@ -1,5 +1,6 @@
 import numpy as np
 
+# Copied from worksheet from Worksheet 7 plummer model notebook.
 # initialise the random number generator
 rng = np.random.Generator(np.random.PCG64(seed=7897))
 # Sample isotropic 3d vectors with a given modulus

@@ -5,7 +5,7 @@ ti.init(arch=ti.gpu)
 # ti.init(arch=ti.gpu, debug=True)
 
 # # Config
-N = int(4e4)  # Change this number as needed
+N = int(4e2)  # Change this number as needed
 # N = int(2e3)  # Change this number as needed
 dt = 1e-1
 # dt = 0.01
@@ -64,7 +64,7 @@ def update_velocities(dt: ti.f32):
         force = ti.Vector([0.0, 0.0, 0.0])
         for j in range(N):
             if i != j:
-                r = positions[j] - positions[i]
+                r = positions[i] - positions[j]
                 # r.norm(1e-3) is equivalent to ti.sqrt(r.norm()**2 + 1e-3)
                 # This is to prevent 1/0 error which can cause wrong derivative
 
@@ -74,7 +74,7 @@ def update_velocities(dt: ti.f32):
                 # rsqrt is faster than sqrt
                 # dist = ti.rsqrt(normsqrt)
 
-                force += r / (dist**3)
+                force -= r / (dist**3)
         velocities[i] += (force/N) * dt
 
 
